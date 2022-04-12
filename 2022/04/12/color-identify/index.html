@@ -79,13 +79,15 @@
 
 
 
-<meta name="description" content="黄土撒落地，名声终不显">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Huritt">
-<meta property="og:url" content="http://example.com/index.html">
+<meta name="description" content="import cv2 import matplotlib.pyplot as pltimport numpy as np 定义一个展示图片的函数def cv_show(name, img):    cv2.imshow(name, img)    cv2.waitKey(0)    cv2.destroyAllWindows() 定义一个形态学处理的函数def good_thresh_img(im">
+<meta property="og:type" content="article">
+<meta property="og:title" content="color identify">
+<meta property="og:url" content="http://example.com/2022/04/12/color-identify/index.html">
 <meta property="og:site_name" content="Huritt">
-<meta property="og:description" content="黄土撒落地，名声终不显">
+<meta property="og:description" content="import cv2 import matplotlib.pyplot as pltimport numpy as np 定义一个展示图片的函数def cv_show(name, img):    cv2.imshow(name, img)    cv2.waitKey(0)    cv2.destroyAllWindows() 定义一个形态学处理的函数def good_thresh_img(im">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-12T05:15:42.000Z">
+<meta property="article:modified_time" content="2022-04-12T05:20:26.627Z">
 <meta property="article:author" content="jy Liu">
 <meta property="article:tag" content="life and soul">
 <meta name="twitter:card" content="summary">
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/"/>
+  <link rel="canonical" href="http://example.com/2022/04/12/color-identify/"/>
 
 
 
 
 
-  <title>Huritt</title>
+  <title>color identify | Huritt</title>
   
 
 
@@ -143,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,9 +228,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -259,9 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/04/12/color-identify/" itemprop="url">color identify</a></h1>
+          <h1 class="post-title" itemprop="name headline">color identify</h1>
         
 
         <div class="post-meta">
@@ -311,9 +310,7 @@
       
 
       
-        
-          
-            <p>import cv2</p>
+        <p>import cv2</p>
 <h1 id="import-matplotlib-pyplot-as-plt"><a href="#import-matplotlib-pyplot-as-plt" class="headerlink" title="import matplotlib.pyplot as plt"></a>import matplotlib.pyplot as plt</h1><p>import numpy as np</p>
 <h1 id="定义一个展示图片的函数"><a href="#定义一个展示图片的函数" class="headerlink" title="定义一个展示图片的函数"></a>定义一个展示图片的函数</h1><p>def cv_show(name, img):<br>    cv2.imshow(name, img)<br>    cv2.waitKey(0)<br>    cv2.destroyAllWindows()</p>
 <h1 id="定义一个形态学处理的函数"><a href="#定义一个形态学处理的函数" class="headerlink" title="定义一个形态学处理的函数"></a>定义一个形态学处理的函数</h1><p>def good_thresh_img(img):<br>    gs_frame &#x3D; cv2.GaussianBlur(img, (5, 5), 0)  # 高斯滤波<br>    hsv &#x3D; cv2.cvtColor(gs_frame, cv2.COLOR_BGR2HSV)  # 转化成HSV图像<br>    erode_hsv &#x3D; cv2.erode(hsv, None, iterations&#x3D;2)<br>    return erode_hsv</p>
@@ -345,8 +342,6 @@ return draw_img
 <p>img &#x3D; cv2.imread(r’C:\Users\86177\Desktop\PCB\PCB1.jpg’, cv2.COLOR_BGR2RGB)  # 读入图像（直接读入灰度图）<br>draw_img &#x3D; img.copy()  # 为保护原图像不被更改而copy了一份，下面对图像的修改都是对这个副本进行的<br>erode_hsv &#x3D; good_thresh_img(img)<br>final_inRange_hsv &#x3D; select_color_img(target_color, erode_hsv)<br>contours &#x3D; extract_contour(final_inRange_hsv)<br>draw_img &#x3D; find_target(contours, draw_img)<br>final_img &#x3D; draw_center(target_list, draw_img)</p>
 <p>cv_show(‘final_img’, final_img)</p>
 
-          
-        
       
     </div>
     
@@ -363,144 +358,28 @@ return draw_img
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/24/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Huritt">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/02/24/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-02-24T13:53:25+08:00">
-                2022-02-24
-              </time>
+              <a href="/2022/02/24/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -510,10 +389,11 @@ return draw_img
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -521,6 +401,10 @@ return draw_img
 
 
           
+
+  
+
+
 
         </div>
         
@@ -541,8 +425,17 @@ return draw_img
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -584,6 +477,22 @@ return draw_img
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#import-matplotlib-pyplot-as-plt"><span class="nav-number">1.</span> <span class="nav-text">import matplotlib.pyplot as plt</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%B1%95%E7%A4%BA%E5%9B%BE%E7%89%87%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">定义一个展示图片的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">定义一个形态学处理的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E8%AF%86%E5%88%AB%E7%9B%AE%E6%A0%87%E9%A2%9C%E8%89%B2%E5%B9%B6%E5%A4%84%E7%90%86%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">定义一个识别目标颜色并处理的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%8F%90%E5%8F%96%E8%BD%AE%E5%BB%93%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">定义一个提取轮廓的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%AF%BB%E6%89%BE%E7%9B%AE%E6%A0%87%E5%B9%B6%E7%BB%98%E5%88%B6%E5%A4%96%E6%8E%A5%E7%9F%A9%E5%BD%A2%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">定义一个寻找目标并绘制外接矩形的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%BB%98%E5%88%B6%E4%B8%AD%E5%BF%83%E7%82%B9%E5%9D%90%E6%A0%87%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text">定义一个绘制中心点坐标的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A2%9C%E8%89%B2%E5%AD%97%E5%85%B8"><span class="nav-number">8.</span> <span class="nav-text">创建颜色字典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E9%A2%9C%E8%89%B2"><span class="nav-number">9.</span> <span class="nav-text">目标颜色</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E6%A0%87%E5%88%97%E8%A1%A8"><span class="nav-number">10.</span> <span class="nav-text">创建目标列表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -724,6 +633,10 @@ return draw_img
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
