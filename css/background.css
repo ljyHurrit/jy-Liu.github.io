@@ -10,9 +10,9 @@
     background: rgba(255,255,255,.5);
 }
 
-web_bg {
+#web_bg {
   /* 背景图像的地址（url括号里）  */
-  background: url(/source/css/background.jpg);
+  background: url(/source/img/background.jpg);
   /* 背景图像不重复 */
   background-repeat: no-repeat;
   /* 背景图像大小 */
