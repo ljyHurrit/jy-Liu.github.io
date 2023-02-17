@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>人脸识别</title>
+      <link href="/2023/02/17/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/"/>
+      <url>/2023/02/17/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/</url>
+      
+        <content type="html"><![CDATA[<h1 id="基于opencv的人脸识别"><a href="#基于opencv的人脸识别" class="headerlink" title="基于opencv的人脸识别"></a>基于opencv的人脸识别</h1><h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2>1.将图片转为灰度图，降低计算难度<br>2.绘制矩形框<br>3.利用训练器来识别人脸<h2 id="具体代码实现"><a href="#具体代码实现" class="headerlink" title="具体代码实现"></a>具体代码实现</h2>1.转化为灰度图，利用opencv库中的cvtColor（）函数  <pre><code>import cv2filepath = &quot;img/xingye-1.png&quot;img = cv2.imread(filepath)# 转换灰色gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)# 显示图像cv2.imshow(&quot;Image&quot;, gray)cv2.waitKey(0)cv2.destroyAllWindows() </code></pre>2.在图片上绘制矩形，利用rectangle（）函数  <pre><code>import cv2filepath = &quot;img/xingye-1.png&quot;img = cv2.imread(filepath)  # 读取图片gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 转换灰色x = y = 10  # 坐标w = 100  # 矩形大小（宽、高）color = (0, 0, 255)  # 定义绘制颜色cv2.rectangle(img, (x, y), (x + w, y + w), color, 1)  # 绘制矩形cv2.imshow(&quot;Image&quot;, img)  # 显示图像cv2.waitKey(0)cv2.destroyAllWindows()  # 释放所有的窗体资源   </code></pre>3.利用训练好的分类器来查询人脸<br>这里采用的是opencv的人脸训练模型 链接<a href="https://github.com/opencv/opencv/tree/master/data/haarcascades">opencv人脸模型训练</a>.<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><pre><code>import cv2filepath = &quot;img/xingye-1.png&quot;img = cv2.imread(filepath)  # 读取图片gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 转换灰色# OpenCV人脸识别分类器classifier = cv2.CascadeClassifier(    &quot;C:\Python36\Lib\site-packages\opencv-master\data\haarcascades\haarcascade_frontalface_default.xml&quot;)color = (0, 255, 0)  # 定义绘制颜色# 调用识别人脸faceRects = classifier.detectMultiScale(    gray, scaleFactor=1.2, minNeighbors=3, minSize=(32, 32))if len(faceRects):  # 大于0则检测到人脸    for faceRect in faceRects:  # 单独框出每一张人脸        x, y, w, h = faceRect        # 框出人脸        cv2.rectangle(img, (x, y), (x + h, y + w), color, 2)        # 左眼        cv2.circle(img, (x + w // 4, y + h // 4 + 30), min(w // 8, h // 8),                color)        #右眼        cv2.circle(img, (x + 3 * w // 4, y + h // 4 + 30), min(w // 8, h // 8),                color)        #嘴巴        cv2.rectangle(img, (x + 3 * w // 8, y + 3 * h // 4),                    (x + 5 * w // 8, y + 7 * h // 8), color)cv2.imshow(&quot;image&quot;, img)  # 显示图像c = cv2.waitKey(10)cv2.waitKey(0)cv2.destroyAllWindows()</code></pre><h3 id="参考：https-github-com-vipstone-faceai"><a href="#参考：https-github-com-vipstone-faceai" class="headerlink" title="参考：https://github.com/vipstone/faceai"></a>参考：<a href="https://github.com/vipstone/faceai">https://github.com/vipstone/faceai</a></h3>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 机器视觉 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>见贤思齐焉，见不贤而内自省也</title>
       <link href="/2022/04/21/%E6%9D%90%E6%96%99%E8%B7%A8%E4%BF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%88%E8%BD%AC%E8%BD%BD%E8%87%AA%E7%9F%A5%E4%B9%8Ezzzzzzz%EF%BC%89/"/>
       <url>/2022/04/21/%E6%9D%90%E6%96%99%E8%B7%A8%E4%BF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%88%E8%BD%AC%E8%BD%BD%E8%87%AA%E7%9F%A5%E4%B9%8Ezzzzzzz%EF%BC%89/</url>
