@@ -4,6 +4,88 @@
   
     
     <entry>
+      <title>正则+requests爬取dangdang网图书数据</title>
+      <link href="/2023/05/03/%E6%AD%A3%E5%88%99-requests%E7%88%AC%E5%8F%96dangdang%E7%BD%91%E5%9B%BE%E4%B9%A6%E6%95%B0%E6%8D%AE/"/>
+      <url>/2023/05/03/%E6%AD%A3%E5%88%99-requests%E7%88%AC%E5%8F%96dangdang%E7%BD%91%E5%9B%BE%E4%B9%A6%E6%95%B0%E6%8D%AE/</url>
+      
+        <content type="html"><![CDATA[<blockquote>通过requests库函数进行各种请求，然后对服务器返回的数据利用正则表达式进行处理来获取想要的信息<br>本次的目标是爬取当当网的前 500 本好五星评书籍<br>首先对网站进行分析当我们打开第一页时，会看到一个网址<br>    <a href="http://bang.dangdang.com/books/fivestars/01.00.00.00.00.00-recent30-0-0-1-1">http://bang.dangdang.com/books/fivestars/01.00.00.00.00.00-recent30-0-0-1-1</a><br>打开第二页时会看到一个网址<br>    <a href="http://bang.dangdang.com/books/fivestars/01.00.00.00.00.00-recent30-0-0-1-2">http://bang.dangdang.com/books/fivestars/01.00.00.00.00.00-recent30-0-0-1-2</a><br>虽然整体看上去差别不大，但是细看会发现，在后面的1，2还是有区别的，这也就说明我们在翻页时，后面对应的数字发生了变化，因此我们可以利用一个变量来对最后一个数字进行处理，来完成翻页的效果<br>主体思路为利用requests库函数来进行网页的各种请求操作，来得到服务器发来的数据，然后利用re进行数据的处理，来得到我们想要的数据。<br>具体的代码如下<br>‘’’python</blockquote><h1 id="导入所需要的包"><a href="#导入所需要的包" class="headerlink" title="导入所需要的包"></a>导入所需要的包</h1>import requests<br>import re<br>import json<h1 id="访问当当网"><a href="#访问当当网" class="headerlink" title="访问当当网"></a>访问当当网</h1>def request_dandan(url):<br>    try:<br>        response &#x3D; requests.get(url)<br>        if response.status_code &#x3D;&#x3D; 200:  # 200表示http常见的状态码，200表示服务器成功返回网页<br>            return response.text  # http响应内容的 字符串(str) 形式<br>    except requests.RequestException as e:<br>        print(e)<br>        return None<h1 id="利用正则表达式处理返回的数据，得到想要的信息"><a href="#利用正则表达式处理返回的数据，得到想要的信息" class="headerlink" title="利用正则表达式处理返回的数据，得到想要的信息"></a>利用正则表达式处理返回的数据，得到想要的信息</h1>def parse_result(html):<br>    pattern &#x3D; re.compile(<br>        ‘&lt;li.<em>?list_num.*?(\d+).</div>.</em>?&lt;img src&#x3D;”(.<em>?)”.<em>?class&#x3D;”name”.</em>?title&#x3D;”(.*?)”&gt;.</em>?class&#x3D;”star”&gt;.<em>?class&#x3D;”tuijian”&gt;(.</em>?)</span>.<em>?class&#x3D;”publisher_info”&gt;.</em>?target&#x3D;”_blank”&gt;(.<em>?)</a>.</em>?class&#x3D;”biaosheng”&gt;.<em>?<span>(.</em>?)</span></div>.<em>?<p><span class="price_n">(.</em>?)</span>.*?</li>‘,<br>        re.S)<br>    items &#x3D; re.findall(pattern, html)<pre><code>for item in items:    yield &#123;        &#39;range&#39;: item[0],        &#39;image&#39;: item[1],        &#39;title&#39;: item[2],        &#39;recommend&#39;: item[3],        &#39;author&#39;: item[4],        &#39;times&#39;: item[5],        &#39;price&#39;: item[6]    &#125;</code></pre><h1 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h1>def write_item_to_file(item):<br>    print(‘开始写入数据 &#x3D;&#x3D;&#x3D;&#x3D;&gt; ‘ + str(item))<br>    with open(‘book.txt’, ‘a’, encoding&#x3D;’UTF-8’) as f:<br>        f.write(json.dumps(item, ensure_ascii&#x3D;False) + ‘\n’)<h1 id="定义翻页函数，将网址后面一位用变量page代替，实现翻页效果。同时在每一次翻页时对信息进行处理"><a href="#定义翻页函数，将网址后面一位用变量page代替，实现翻页效果。同时在每一次翻页时对信息进行处理" class="headerlink" title="定义翻页函数，将网址后面一位用变量page代替，实现翻页效果。同时在每一次翻页时对信息进行处理"></a>定义翻页函数，将网址后面一位用变量page代替，实现翻页效果。同时在每一次翻页时对信息进行处理</h1>def main(page):<br>    url &#x3D; ‘<a href="http://bang.dangdang.com/books/fivestars/01.00.00.00.00.00-recent30-0-0-1-&#39;">http://bang.dangdang.com/books/fivestars/01.00.00.00.00.00-recent30-0-0-1-&#39;</a> + str(page)<br>    html &#x3D; request_dandan(url)<br>    items &#x3D; parse_result(html)  # 解析过滤我们想要的信息<br>    for item in items:<br>        write_item_to_file(item)if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:<br>    for i in range(1, 26):  # 需要500条信息，因此翻页到26页<br>        main(i)<br>‘’’]]></content>
+      
+      
+      <categories>
+          
+          <category> 爬虫 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> re&amp;requests </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>正则表达式</title>
+      <link href="/2023/05/02/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+      <url>/2023/05/02/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+      
+        <content type="html"><![CDATA[#有关正则表达式<br>根据[菜鸟教程]<a href="https://www.runoob.com/regexp/regexp-tutorial.html">https://www.runoob.com/regexp/regexp-tutorial.html</a>,正则表达式是对字符串（包括普通字符（例如，a 到 z 之间的字母）和特殊字符（称为“元字符”））操作的一种逻辑公式，就是用事先定义好的一些特定字符及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。正则表达式是一种文本模式，该模式描述在搜索文本时要匹配的一个或多个字符串。<br>##下面以一个实例来简单介绍一下正表达式<br>    var str &#x3D; “123abc”;<br>    var patt1 &#x3D; &#x2F;^[0-9]+abc$&#x2F;;<br>    document.write(str.match(patt1));<br>以上是一个正则表达式，匹配以数字开头，并以 abc 结尾的字符串，其中^为正则表达式开始的标志，$为结束的标志。<br>[0-9]+匹配多个数字， [0-9] 匹配单个数字，+ 匹配一个或者多个。abc$匹配字母 abc 并以 abc 结尾。<br>    var str &#x3D; “abc-0123”;<br>    var patt1 &#x3D; &#x2F;^[a-z0-9-<em>.]+123$&#x2F;;<br>    document.write(str.match(patt1));<br>运行结果：’’’abc-0123’’’<br>再比如以下代码行<br>‘’’var str &#x3D; “Ljy200203%”;<br>var patt1 &#x3D; &#x2F;^[A-Z]+[a-z0-9-</em>&#x2F;%]{8,15}$&#x2F;;<br>document.write(str.match(patt1));’’’<br>^[A-Z]+[a-z0-9-<em>&#x2F;%]{8,15}$的含义是匹配含有大写字母A-Z，以及小写字母a-z&#x2F;数字0-9&#x2F;特殊符号-</em>&#x2F;%,且长度为8到15的字符串，此时的输出结果为’’’Ljy200203%’’’<br>但是如果将输入的字符串改”ljy200203%”,输出结果为null，此时因为不满足大写字母的条件。如果字符串改为”ljy2002”,输出结果也为null，不满足长度8-15的字符串。<br>#正则表达式的语法<br>正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。<ul><li><ul><li>号代表前面的字符必须至少出现一次（1次或多次），例如runoo+b，可以匹配 runoob、runooob、runoooooob 等</li></ul></li><li><ul><li>号代表前面的字符可以不出现，也可以出现一次或者多次（0次、或1次、或多次）例如runoo*b，可以匹配 runob、runoob、runoooooob</li></ul></li><li>? 问号代表前面的字符最多只可以出现一次（0次或1次），例如colou?r 可以匹配 color 或者 colour。<br>正则表达式的组件可以是单个的字符、字符集合、字符范围、字符间的选择或者所有这些组件的任意组合。<br>正则表达式是由普通字符（例如字符 a 到 z）以及特殊字符（称为”元字符”）组成的文字模式。模式描述在搜索文本时要匹配的一个或多个字符串。正则表达式作为一个模板，将某个字符模式与所搜索的字符串进行匹配。</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2023/04/26/%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96%E6%8B%89%E5%8B%BE%E7%BD%91%EF%BC%88%E5%9F%BA%E4%BA%8Eselenium%EF%BC%89/"/>
+      <url>/2023/04/26/%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96%E6%8B%89%E5%8B%BE%E7%BD%91%EF%BC%88%E5%9F%BA%E4%BA%8Eselenium%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[有关selenimu的具体信息参考<a href="https://www.selenium.dev/zh-cn/documentation/webdriver/getting_started/">selenium中文</a><br>在pycharm上使用任何第三方包都需要先导入所需要的包<br>‘’’Python<br>from selenium.webdriver import Chrome<br>‘’’<br>接着需要在程序里打开浏览器，并请求到网站，这里使用web作为变量，访问拉勾网<br>‘’’<br>web &#x3D; Chrome()<br>web.get(“<a href="https://www.lagou.com/&quot;">https://www.lagou.com/&quot;</a>)<blockquote>在这里，遇到了第一个问题，打开浏览器后，即使没有写关闭程序，浏览器在一段时间后会自己关闭，可能是因为驱动版本和chrome版本不匹配</blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>性别检测</title>
+      <link href="/2023/02/18/%E6%80%A7%E5%88%AB%E6%A3%80%E6%B5%8B/"/>
+      <url>/2023/02/18/%E6%80%A7%E5%88%AB%E6%A3%80%E6%B5%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="性别识别，主要基于keras实现性别识别，模型数据使用faca-classification"><a href="#性别识别，主要基于keras实现性别识别，模型数据使用faca-classification" class="headerlink" title="性别识别，主要基于keras实现性别识别，模型数据使用faca_classification"></a>性别识别，主要基于keras实现性别识别，模型数据使用faca_classification</h1><h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2>在人脸识别的代码基础上，利用opencv识别人脸，然后使用keras来鉴定性别]]></content>
+      
+      
+      <categories>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> opencv &amp; keras </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>人脸识别</title>
       <link href="/2023/02/17/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/"/>
       <url>/2023/02/17/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/</url>
